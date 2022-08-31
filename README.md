@@ -11,19 +11,20 @@ bash.exe -c "ifconfig eth0 | grep 'inet '"
 ```powershell
 Start-Process powershell -verb runas
 ```
+
 4. Set up port forwarding using `<WSL2_IP_ADDRESS>` from pt. 2
 ```powershell
 netsh interface portproxy add v4tov4 listenport=19000 listenaddress=0.0.0.0 connectport=19000 connectaddress=<WSL2_IP_ADDRESS>
 ```
 
-6. In the Linux terminal run:
+5. In the Linux terminal run:
 ```bash
 export REACT_NATIVE_PACKAGER_HOSTNAME=$(netsh.exe interface ip show address "Wi-Fi" | grep 'IP Address' | sed -r 's/^.*IP Address:\W*//')
 ```
 
-7. Run app with:
+6. Run app with:
 ```
 npm start
 ```
 
-8. Using provided QR code load app on your phone through `Expo Go` app.
+7. Using provided QR code load app on your phone through `Expo Go` app.
