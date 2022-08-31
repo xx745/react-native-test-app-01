@@ -1,20 +1,26 @@
 # When running on WSL2
 
-1. Open Windows firewall and allow inbound traffic on port `19000`
+1. Allow inbound and outbound traffic in your Windows Firewall on port 19000
 
-2. Then inside WSL2 Linux terminal run:
-```bash
-export REACT_NATIVE_PACKAGER_HOSTNAME=$(netsh.exe interface ip show address "Wi-Fi" | grep 'IP Address' | sed -r 's/^.*IP Address:\W*//')
+2. Find WSL2 IP address:
+```powershell
+bash.exe -c "ifconfig eth0 | grep 'inet '"
 ```
 
-3. Check IP with:
-```bash
-echo Meteor will use dev machine IP address: $REACT_NATIVE_PACKAGER_HOSTNAME
+3. Run new PowerShell window as admin 
+```powershell
+Start-Process powershell -verb runas
+```
+4. Set up port forwarding using `<WSL2_IP_ADDRESS>` from pt. 2
+```powershell
+netsh interface portproxy add v4tov4 listenport=19000 listenaddress=0.0.0.0 connectport=19000 connectaddress=<WSL2_IP_ADDRESS>
 ```
 
-4. Run app with:
+6. Return to WSL2 terminal
+
+7. Run app with:
 ```
 npm start
 ```
 
-5. Using provided QR code load app on your phone through `Expo Go` app
+8. Using provided QR code load app on your phone through `Expo Go` app
